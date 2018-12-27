@@ -51,12 +51,46 @@ public class TheGolfGame {
 
 			}
 			printGameData();
-			if ( goalDistance < 0.1) System.out.println("You hit the hole!");
-			else System.out.println("Leave or try from the beginning!");
-			
+			if (goalDistance < 0.1)
+				System.out.println("You hit the hole!");
+			else
+				System.out.println("Leave or try from the beginning!");
 
 		} while (continueOrNot());
 
+	}
+
+	private static double getInputVelocity() {
+		double inputVelocity;
+		System.out.print("Velocity (in m/s): ");
+		String input = scanner.nextLine();
+		try {
+			inputVelocity = Double.parseDouble(input);
+			if (rangeCheck(inputVelocity, minVelocity, maxVelocity))
+				return inputVelocity;
+			else
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			System.out.println("Not a valid number or value out of bounds (must be > 0 and <" + maxVelocity + ") ");
+			return getInputVelocity();
+		}
+	}
+
+	private static double getInputAngle() {
+		double inputAngle;
+
+		System.out.print("Angle (in degrees): ");
+		String input = scanner.nextLine();
+		try {
+			inputAngle = Double.parseDouble(input);
+			if (rangeCheck(inputAngle, minAngle, maxAngle))
+				return inputAngle;
+			else
+				throw new NumberFormatException();
+		} catch (NumberFormatException e) {
+			System.out.println("Not a valid number value out of bounds (must be > 0 and < " + maxAngle + ")");
+			return getInputAngle();
+		}
 	}
 
 	private static void printGameData() {
@@ -72,27 +106,6 @@ public class TheGolfGame {
 		}
 		System.out.println("Totally " + courseData.length + " number of hits");
 
-	}
-
-	private static boolean continueOrNot() {
-		System.out.println("Play again (Y/N) ?");
-		String input = scanner.nextLine();
-		boolean returnValue = true;
-		switch (input) {
-		case "Y":
-		case "y":
-			returnValue = true;
-			break;
-		case "N":
-		case "n":
-			returnValue = false;
-			break;
-		default:
-			System.out.println("I'll take that as a YES");
-			returnValue = true;
-			break;
-		}
-		return returnValue;
 	}
 
 	private static void saveGamedata(double goalDistance2, double givenAngle, double givenVelocity, double hitLength) {
@@ -117,46 +130,6 @@ public class TheGolfGame {
 		return round(distance, 2);
 	}
 
-	private static double getInputVelocity() {
-		double inputVelocity;
-		System.out.print("Velocity (in m/s): ");
-		String input = scanner.nextLine();
-		try {
-			inputVelocity = Double.parseDouble(input);
-			if (rangeCheck(inputVelocity, minVelocity, maxVelocity))
-				return inputVelocity;
-			else
-				throw new NumberFormatException();
-		} catch (NumberFormatException e) {
-			System.out.println("Not a valid number or value out of bounds (must be > 0 and <" + maxVelocity + ") ");
-			return getInputVelocity();
-		}
-	}
-
-	private static boolean rangeCheck(double theValue, double minValue, double maxValue) {
-		if (theValue >= minValue && theValue <= maxValue)
-			return true;
-		else
-			return false;
-	}
-
-	private static double getInputAngle() {
-		double inputAngle;
-
-		System.out.print("Angle (in degrees): ");
-		String input = scanner.nextLine();
-		try {
-			inputAngle = Double.parseDouble(input);
-			if (rangeCheck(inputAngle, minAngle, maxAngle))
-				return inputAngle;
-			else
-				throw new NumberFormatException();
-		} catch (NumberFormatException e) {
-			System.out.println("Not a valid number value out of bounds (must be > 0 and < " + maxAngle + ")");
-			return getInputAngle();
-		}
-	}
-
 	private static double createNewHole(double min, double max) {
 
 		// delete old data if any
@@ -175,8 +148,36 @@ public class TheGolfGame {
 		return bd.doubleValue();
 	}
 
-	public static double[][] expandArray(double[][] source) {
-		return Arrays.copyOf(source, source.length + 1);
+//	private static double[][] expandArray(double[][] source) {
+//		return Arrays.copyOf(source, source.length + 1);
+//	}
+
+	private static boolean rangeCheck(double theValue, double minValue, double maxValue) {
+		if (theValue >= minValue && theValue <= maxValue)
+			return true;
+		else
+			return false;
+	}
+
+	private static boolean continueOrNot() {
+		System.out.println("Play again (Y/N) ?");
+		String input = scanner.nextLine();
+		boolean returnValue = true;
+		switch (input) {
+		case "Y":
+		case "y":
+			returnValue = true;
+			break;
+		case "N":
+		case "n":
+			returnValue = false;
+			break;
+		default:
+			System.out.println("I'll take that as a YES");
+			returnValue = true;
+			break;
+		}
+		return returnValue;
 	}
 
 }
