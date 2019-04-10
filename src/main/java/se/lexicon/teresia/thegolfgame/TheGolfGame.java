@@ -122,7 +122,7 @@ public class TheGolfGame {
 
 	}
 
-	private static double calculateDistance(double givenAngle, double givenVelocity) {
+	public static double calculateDistance(double givenAngle, double givenVelocity) {
 		double radians = (PI / 180) * givenAngle;
 
 		double distance = Math.pow(givenVelocity, 2) / gravity * Math.sin(2 * radians);
